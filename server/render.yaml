@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: memory-jar-backend
+    env: node
+    plan: starter # Starter plan or higher recommended for persistent disk & standing background scheduler
+    region: oregon
+    branch: main
+    rootDir: server
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    disk:
+      name: memoryjar-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATA_DIR
+        value: /var/data
+      - key: FRONTEND_URL
+        sync: false # Set to your deployed Vercel URL e.g. https://memory-jar.vercel.app or custom domain
+      - key: CLIENT_URL
+        sync: false # Set to your deployed Vercel URL
+      - key: VAPID_PUBLIC_KEY
+        sync: false # Paste your VAPID public key
+      - key: VAPID_PRIVATE_KEY
+        sync: false # Paste your private VAPID key securely
+      - key: VAPID_SUBJECT
+        value: mailto:hello@memoryjar.app
+    healthCheckPath: /api/health
+    autoDeploy: true

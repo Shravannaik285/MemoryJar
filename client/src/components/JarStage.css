@@ -1,0 +1,578 @@
+/* ==========================================================================
+   JAR STAGE COMPONENT STYLES
+   Realistic 3D glass jar, folded chits, cozy desk props, warm lighting
+   ========================================================================== */
+
+.jar-stage-container {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0 1rem;
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+/* Cozy Room Backdrop with Warm Sunlight */
+.cozy-room-backdrop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Smiling Desk Night Lamp */
+.prop-lamp {
+  position: absolute;
+  left: 20px;
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(-3deg);
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.lamp-glow {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 170, 0.7) 0%, rgba(255, 215, 130, 0) 70%);
+  filter: blur(10px);
+  z-index: 0;
+  animation: softPulse 4s infinite ease-in-out;
+}
+
+.lamp-face {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 44px;
+  background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #FFF4DF 80%);
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: 0 4px 10px rgba(180, 130, 90, 0.15), inset 0 2px 4px #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-family: var(--font-body);
+  color: #7A533E;
+  font-size: 11px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.lamp-stand {
+  width: 32px;
+  height: 6px;
+  background: #D8B799;
+  border-radius: 4px;
+  margin-top: -2px;
+}
+
+/* Hanging Polaroids */
+.prop-polaroids {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  display: flex;
+  gap: 12px;
+}
+
+.polaroid {
+  background: #FFFFFF;
+  padding: 4px 4px 14px 4px;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(100, 70, 50, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.polaroid-1 {
+  transform: rotate(6deg);
+}
+
+.polaroid-2 {
+  transform: rotate(-4deg);
+}
+
+.polaroid-photo {
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+}
+
+.polaroid-photo.sunrise {
+  background: linear-gradient(135deg, #FFB085 0%, #FDC38F 50%, #B8E4FF 100%);
+}
+
+.polaroid-photo.sunset {
+  background: linear-gradient(135deg, #845EC2 0%, #D65DB1 50%, #FF9671 100%);
+}
+
+/* Ceramic Cup with Pencils */
+.prop-cup {
+  position: absolute;
+  right: 28px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cup-pencils {
+  display: flex;
+  gap: 4px;
+  margin-bottom: -4px;
+  z-index: 0;
+}
+
+.pencil {
+  width: 5px;
+  height: 28px;
+  border-radius: 2px 2px 0 0;
+}
+
+.p-yellow { background: #FFD166; transform: rotate(-8deg); }
+.p-pink { background: #EF476F; transform: rotate(2deg); height: 32px; }
+.p-blue { background: #118AB2; transform: rotate(10deg); }
+
+.cup-body {
+  position: relative;
+  z-index: 1;
+  width: 38px;
+  height: 42px;
+  background: #FFFDF9;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 10px rgba(150, 110, 80, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(220, 190, 170, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cup-heart {
+  color: #E28E9D;
+  font-size: 14px;
+}
+
+/* Sparkles Layer */
+.jar-sparkles-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.sparkle {
+  position: absolute;
+  color: #FFAE68;
+  font-size: 14px;
+  animation: sparklePulse 3s infinite ease-in-out;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 6px rgba(255, 200, 100, 0.6));
+}
+
+.s-1 { top: 25%; left: 24%; animation-delay: 0.2s; font-size: 16px; }
+.s-2 { top: 40%; left: 20%; animation-delay: 1.2s; font-size: 12px; color: #FF9B9B; }
+.s-3 { top: 20%; right: 26%; animation-delay: 0.8s; font-size: 18px; color: #FFE082; }
+.s-4 { top: 55%; right: 22%; animation-delay: 2.1s; font-size: 13px; }
+.s-5 { bottom: 25%; left: 28%; animation-delay: 1.5s; font-size: 11px; color: #FFCC80; }
+
+/* 3D Jar Assembly */
+.jar-3d-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 220px;
+  height: 310px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Cork Lid */
+.jar-lid-assembly {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cork-lid-top {
+  width: 140px;
+  height: 24px;
+  background: linear-gradient(180deg, #D6A878 0%, #BA8957 60%, #9E6F3E 100%);
+  border-radius: 12px 12px 4px 4px;
+  box-shadow: 
+    inset 0 3px 4px rgba(255, 235, 200, 0.6),
+    inset 0 -3px 4px rgba(80, 50, 20, 0.35),
+    0 4px 10px rgba(90, 50, 20, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.wood-grain-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  opacity: 0.4;
+}
+
+.cork-lid-rim {
+  width: 156px;
+  height: 10px;
+  background: linear-gradient(180deg, #BA8957 0%, #8A5A2B 100%);
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(70, 40, 15, 0.25);
+  margin-top: -1px;
+}
+
+/* Rustic Twine & Tag */
+.jar-neck-twine {
+  position: relative;
+  z-index: 6;
+  width: 148px;
+  height: 14px;
+  background: repeating-linear-gradient(
+    45deg,
+    #B59068,
+    #B59068 5px,
+    #9C7750 5px,
+    #9C7750 10px
+  );
+  border-radius: 6px;
+  margin-top: -3px;
+  box-shadow: 0 2px 6px rgba(60, 40, 20, 0.3);
+}
+
+.twine-knot {
+  position: absolute;
+  right: 28px;
+  top: 1px;
+  width: 12px;
+  height: 12px;
+  background: #8A653F;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.twine-tag-string {
+  position: absolute;
+  right: 32px;
+  top: 10px;
+  width: 2px;
+  height: 24px;
+  background: #A67E55;
+  transform: rotate(8deg);
+  transform-origin: top;
+}
+
+.kraft-heart-tag {
+  position: absolute;
+  right: 14px;
+  top: 30px;
+  width: 44px;
+  height: 52px;
+  background: #E6C8A5;
+  border-radius: 4px;
+  clip-path: polygon(0% 12px, 12px 0%, 32px 0%, 44px 12px, 44px 100%, 0% 100%);
+  box-shadow: 0 4px 12px rgba(80, 50, 30, 0.22);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(6deg);
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.jar-stage-container:hover .kraft-heart-tag {
+  transform: rotate(14deg) translateY(2px);
+}
+
+.tag-hole {
+  width: 6px;
+  height: 6px;
+  background: #735133;
+  border-radius: 50%;
+  margin-top: 4px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.tag-heart {
+  font-family: var(--font-body);
+  font-size: 20px;
+  color: #5C3D2E;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* Glass Body Container */
+.jar-glass-body {
+  position: relative;
+  z-index: 3;
+  width: 195px;
+  height: 220px;
+  margin-top: -4px;
+  border-radius: 18px 18px 50px 50px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    rgba(255, 255, 255, 0.02) 70%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  box-shadow:
+    inset 0 0 25px rgba(255, 255, 255, 0.6),
+    inset 4px 0 12px rgba(255, 255, 255, 0.5),
+    inset -4px 0 12px rgba(255, 255, 255, 0.4),
+    0 15px 35px -5px rgba(120, 80, 50, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 14px;
+}
+
+/* Glass Reflections */
+.glass-reflection-left {
+  position: absolute;
+  top: 15px;
+  left: 12px;
+  width: 14px;
+  height: 180px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.2) 60%,
+    transparent 100%
+  );
+  border-radius: 10px;
+  filter: blur(1px);
+}
+
+.glass-reflection-right {
+  position: absolute;
+  top: 25px;
+  right: 14px;
+  width: 8px;
+  height: 160px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent 100%
+  );
+  border-radius: 8px;
+  filter: blur(1px);
+}
+
+.glass-depth-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 60%,
+    rgba(255, 235, 215, 0.25) 0%,
+    rgba(255, 255, 255, 0) 75%
+  );
+  pointer-events: none;
+}
+
+/* Paper Chits Inside Jar */
+.jar-chits-cluster {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 180px;
+  display: block;
+}
+
+/* Individual Folded Paper Chit */
+.chit {
+  position: absolute;
+  width: 44px;
+  height: 30px;
+  border-radius: 5px;
+  box-shadow: 
+    0 4px 10px rgba(60, 35, 20, 0.22),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  clip-path: polygon(0% 15%, 50% 0%, 100% 15%, 100% 85%, 50% 100%, 0% 85%);
+}
+
+.chit-crease {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.chit-heart-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #F472B6;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* Color Themes for Paper Chits */
+.chit-pink {
+  background: linear-gradient(135deg, #FFB3C6 0%, #FF8FAB 100%);
+}
+
+.chit-yellow {
+  background: linear-gradient(135deg, #FFF099 0%, #FFE066 100%);
+}
+
+.chit-blue {
+  background: linear-gradient(135deg, #C5E9FA 0%, #99D7F7 100%);
+}
+
+.chit-peach {
+  background: linear-gradient(135deg, #FFD7BA 0%, #FEC5BB 100%);
+}
+
+.chit-lavender {
+  background: linear-gradient(135deg, #E2D4F0 0%, #CDB4DB 100%);
+}
+
+/* Natural Organic Scattered Positioning in Jar - Authentic Pile */
+.c-1  { bottom: 6px; left: 16px; transform: rotate(-18deg); }
+.c-2  { bottom: 8px; left: 52px; transform: rotate(10deg); }
+.c-3  { bottom: 6px; right: 20px; transform: rotate(-25deg); }
+.c-4  { bottom: 18px; left: 88px; transform: rotate(32deg); }
+.c-5  { bottom: 26px; left: 14px; transform: rotate(40deg); z-index: 2; }
+.c-6  { bottom: 30px; left: 58px; transform: rotate(-12deg); z-index: 2; }
+.c-7  { bottom: 28px; right: 18px; transform: rotate(20deg); z-index: 2; }
+.c-8  { bottom: 48px; left: 26px; transform: rotate(-24deg); z-index: 3; }
+.c-9  { bottom: 52px; left: 74px; transform: rotate(18deg); z-index: 3; }
+.c-10 { bottom: 50px; right: 30px; transform: rotate(-8deg); z-index: 3; }
+.c-11 { bottom: 70px; left: 20px; transform: rotate(16deg); z-index: 4; }
+.c-12 { bottom: 74px; left: 62px; transform: rotate(-32deg); z-index: 4; }
+.c-13 { bottom: 72px; right: 22px; transform: rotate(26deg); z-index: 4; }
+.c-14 { bottom: 94px; left: 34px; transform: rotate(-10deg); z-index: 5; }
+.c-15 { bottom: 96px; right: 38px; transform: rotate(14deg); z-index: 5; }
+.c-16 { bottom: 112px; left: 56px; transform: rotate(22deg); z-index: 6; }
+.c-17 { bottom: 114px; right: 48px; transform: rotate(-18deg); z-index: 6; }
+.c-18 { bottom: 130px; left: 72px; transform: rotate(6deg); z-index: 7; }
+
+/* Subtle hovering movement of chits */
+.jar-stage-container:hover .c-18 { transform: rotate(12deg) translateY(-4px); }
+.jar-stage-container:hover .c-16 { transform: rotate(26deg) translateY(-3px); }
+.jar-stage-container:hover .c-17 { transform: rotate(-22deg) translateY(-2px); }
+
+/* Curved Base Lens of Jar */
+.glass-base-curve {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+  border-radius: 0 0 50px 50px;
+}
+
+/* Wood Slice Coaster - Flush underneath Jar Base */
+.wood-slice-coaster {
+  position: absolute;
+  bottom: 32px;
+  width: 240px;
+  height: 34px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bark-rim {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 60%, #9B6A3E 0%, #684120 70%, #4A2D12 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 12px 24px rgba(70, 40, 20, 0.35),
+    inset 0 3px 6px rgba(255, 220, 180, 0.4);
+}
+
+.tree-rings {
+  position: absolute;
+  width: 92%;
+  height: 84%;
+  background: radial-gradient(ellipse at 45% 45%, #D6A775 0%, #BF8F5C 50%, #A67543 90%);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.4);
+}
+
+.coaster-shadow {
+  position: absolute;
+  bottom: -16px;
+  width: 270px;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(80, 45, 25, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+/* Target marker for 2D-to-3D handoff */
+.jar-mouth-target-marker {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 2px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 10;
+}
+
+@media (max-width: 640px) {
+  .jar-stage-container {
+    height: 330px;
+  }
+  .jar-3d-wrapper {
+    transform: scale(0.9);
+  }
+  .prop-lamp {
+    left: 4px;
+    bottom: 30px;
+    transform: scale(0.85);
+  }
+  .prop-cup {
+    right: 8px;
+    bottom: 25px;
+    transform: scale(0.85);
+  }
+  .prop-polaroids {
+    right: 8px;
+    top: 5px;
+    transform: scale(0.85);
+  }
+}

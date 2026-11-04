@@ -1,0 +1,97 @@
+/* ==========================================================================
+   FOOTER COMPONENT STYLES
+   Warm quote, scrapbook stitch line, cozy muted brown typography
+   ========================================================================== */
+
+.footer-container {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem 1rem 2.5rem;
+  gap: 0.85rem;
+  user-select: none;
+}
+
+.footer-stitch-line {
+  width: 80%;
+  max-width: 320px;
+  height: 1px;
+  border-top: 1.5px dashed rgba(190, 155, 130, 0.4);
+  margin-bottom: 0.5rem;
+}
+
+.footer-quote-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-width: 520px;
+  padding: 0.6rem 1.25rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(230, 200, 180, 0.3);
+  box-shadow: 0 2px 10px rgba(120, 85, 60, 0.04);
+}
+
+.quote-mark {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: #D48970;
+  line-height: 1;
+}
+
+.footer-quote-text {
+  font-family: var(--font-script);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.footer-heart {
+  font-size: 1.1rem;
+  display: inline-block;
+  animation: sparklePulse 3s infinite ease-in-out;
+}
+
+.footer-subtext-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.bullet-dot {
+  color: var(--border-warm);
+}
+
+.quick-demo-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #D85A74;
+  background: #FFE8ED;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  transition: all 0.2s ease;
+}
+
+.quick-demo-btn:hover {
+  background: #FFD4DF;
+  transform: scale(1.05);
+}
+
+@media (max-width: 640px) {
+  .footer-quote-text {
+    font-size: 1.15rem;
+  }
+}

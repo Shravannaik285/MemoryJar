@@ -1,0 +1,181 @@
+/* ==========================================================================
+   ACTION BUTTONS COMPONENT STYLES
+   Side-by-side plush pastel cards for Add Chit and View Chits
+   ========================================================================== */
+
+.action-buttons-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.action-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.35rem 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid transparent;
+  transition: all 0.3s var(--ease-spring);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+
+.action-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.action-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Glass Sheen overlay on card hover */
+.action-card-sheen {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+
+.action-card:hover .action-card-sheen {
+  left: 200%;
+}
+
+/* Add Chit Card Theme */
+.card-add-chit {
+  background: linear-gradient(145deg, #FFF4EE 0%, #FFE2D8 60%, #FFD6C9 100%);
+  border-color: rgba(255, 190, 180, 0.5);
+}
+
+.card-add-chit:hover {
+  border-color: rgba(232, 139, 110, 0.7);
+  box-shadow: 0 14px 28px -6px rgba(232, 139, 110, 0.25);
+}
+
+/* View Chits Card Theme */
+.card-view-chits {
+  background: linear-gradient(145deg, #F9F5FF 0%, #EDE4FF 60%, #E3D6FE 100%);
+  border-color: rgba(215, 195, 255, 0.5);
+}
+
+.card-view-chits:hover {
+  border-color: rgba(162, 130, 225, 0.7);
+  box-shadow: 0 14px 28px -6px rgba(162, 130, 225, 0.25);
+}
+
+/* Icon Container */
+.action-icon-container {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  transition: transform 0.3s var(--ease-spring);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.action-card:hover .action-icon-container {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+.icon-pink {
+  background: #FFFFFF;
+  color: #E86B7E;
+  border: 1px solid rgba(255, 180, 190, 0.4);
+}
+
+.icon-lavender {
+  background: #FFFFFF;
+  color: #835AC6;
+  border: 1px solid rgba(210, 180, 250, 0.4);
+}
+
+.action-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Text Group */
+.action-text-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.action-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-title {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.action-subtitle {
+  font-size: 0.825rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  margin: 0;
+  max-width: 170px;
+}
+
+.chit-counter-pill {
+  background: #835AC6;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 6px rgba(131, 90, 198, 0.3);
+}
+
+@media (max-width: 480px) {
+  .action-buttons-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .action-card {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 1rem 1.25rem;
+    gap: 1rem;
+  }
+  .action-icon-container {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  .action-text-group {
+    align-items: flex-start;
+  }
+  .action-subtitle {
+    max-width: none;
+  }
+}

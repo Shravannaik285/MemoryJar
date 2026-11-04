@@ -1,0 +1,426 @@
+/* ==========================================================================
+   Progressive Web App (PWA) Cozy Styles
+   ========================================================================== */
+
+/* 1. Offline Connectivity Indicator */
+.pwa-offline-indicator {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(138, 74, 59, 0.16);
+  pointer-events: auto;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: pwaSlideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pwaSlideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.pwa-offline-mode {
+  background: #FFF7ED;
+  color: #9A3412;
+  border: 1.5px solid #FED7AA;
+}
+
+.pwa-online-mode {
+  background: #F0FDF4;
+  color: #166534;
+  border: 1.5px solid #BBF7D0;
+}
+
+.pwa-indicator-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pwa-indicator-text {
+  letter-spacing: 0.01em;
+}
+
+/* 2. Cozy Install Prompt Card / Banner */
+.pwa-install-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9990;
+  max-width: 380px;
+  width: calc(100vw - 36px);
+  background: #FFFDF9;
+  border: 2px solid #FCE7F3;
+  border-radius: 20px;
+  padding: 16px 18px;
+  box-shadow: 0 14px 34px rgba(138, 74, 59, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: pwaSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pwaSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pwa-install-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pwa-install-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pwa-install-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FFF0F3, #FFE4E8);
+  border: 1.5px solid #FFA3B8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E11D48;
+}
+
+.pwa-install-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.pwa-install-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #4A3528;
+  margin: 0;
+}
+
+.pwa-install-tagline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  color: #8C7A6B;
+  margin: 0;
+}
+
+.pwa-install-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #A89587;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.pwa-install-close-btn:hover {
+  background: rgba(168, 149, 135, 0.14);
+  color: #4A3528;
+}
+
+.pwa-install-body {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  color: #6B5B4E;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.pwa-install-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.pwa-install-dismiss-btn {
+  background: transparent;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #8C7A6B;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pwa-install-dismiss-btn:hover {
+  background: rgba(140, 122, 107, 0.1);
+  color: #4A3528;
+}
+
+.pwa-install-confirm-btn {
+  background: linear-gradient(135deg, #FFB3C6, #F472B6);
+  border: none;
+  color: #581C28;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(244, 114, 182, 0.28);
+  transition: all 0.2s ease;
+}
+
+.pwa-install-confirm-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(244, 114, 182, 0.38);
+}
+
+.pwa-install-confirm-btn:active {
+  transform: translateY(0);
+}
+
+/* 3. Header / Footer Quick Install Pill */
+.pwa-quick-install-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFF0F3;
+  color: #8B2C43;
+  border: 1.5px solid #FFA3B8;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255, 163, 184, 0.24);
+  transition: all 0.2s ease;
+}
+
+.pwa-quick-install-pill:hover {
+  background: #FFE4E8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 163, 184, 0.35);
+}
+
+/* 4. Update Notification Bar */
+.pwa-update-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9995;
+  background: #FFFDF9;
+  border: 2px solid #D0BCFE;
+  border-radius: 18px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 10px 30px rgba(85, 60, 154, 0.2);
+  animation: pwaSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 480px;
+  width: calc(100vw - 36px);
+}
+
+.pwa-update-icon-wrapper {
+  color: #7C3AED;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pwa-update-text {
+  flex: 1;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  color: #4A3528;
+  margin: 0;
+}
+
+.pwa-update-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pwa-update-dismiss-btn {
+  background: transparent;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  color: #8C7A6B;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pwa-update-refresh-btn {
+  background: linear-gradient(135deg, #D0BCFE, #C0A8FD);
+  border: none;
+  color: #432874;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 10px rgba(192, 168, 253, 0.35);
+  transition: all 0.2s ease;
+}
+
+.pwa-update-refresh-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(192, 168, 253, 0.45);
+}
+
+/* 5. iOS Install Instruction Modal */
+.pwa-ios-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(50, 30, 20, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: pwaFadeIn 0.3s ease;
+}
+
+@keyframes pwaFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pwa-ios-modal-card {
+  background: #FFFDF9;
+  border-radius: 24px;
+  padding: 24px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 48px rgba(138, 74, 59, 0.24);
+  border: 2px solid #FCE7F3;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pwa-ios-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pwa-ios-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: #4A3528;
+  margin: 0;
+}
+
+.pwa-ios-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.pwa-ios-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  color: #5D4A3C;
+  line-height: 1.4;
+}
+
+.pwa-step-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #FFE4E8;
+  color: #E11D48;
+  font-weight: 700;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pwa-ios-done-btn {
+  background: linear-gradient(135deg, #FFB3C6, #F472B6);
+  border: none;
+  color: #581C28;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .pwa-install-banner {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    width: auto;
+  }
+
+  .pwa-update-bar {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    transform: none;
+    width: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .pwa-update-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+

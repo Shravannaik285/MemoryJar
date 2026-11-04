@@ -1,0 +1,26 @@
+{
+  "name": "memory-jar-monorepo",
+  "version": "1.0.0",
+  "description": "Memory Jar — Little moments. A lifetime of memories. A cozy 3D interactive memory-keeping sanctuary.",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev:client",
+    "dev:client": "npm --prefix client run dev",
+    "dev:server": "npm --prefix server run dev",
+    "build": "npm --prefix client run build",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "npm --prefix client run test",
+    "test:server": "npm --prefix server run test"
+  },
+  "keywords": [
+    "memory-jar",
+    "pwa",
+    "threejs",
+    "react",
+    "web-push",
+    "dexie",
+    "indexeddb"
+  ],
+  "author": "Memory Jar Team",
+  "license": "MIT"
+}

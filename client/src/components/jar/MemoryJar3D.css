@@ -1,0 +1,37 @@
+/* ==========================================================================
+   MEMORY JAR 3D CANVAS WRAPPER STYLES
+   Responsive WebGL Canvas with smooth pointer events and touch handling
+   ========================================================================== */
+
+.memory-jar-3d-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  user-select: none;
+  touch-action: none;
+}
+
+.r3f-jar-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: auto;
+}
+
+@media (max-width: 640px) {
+  .memory-jar-3d-canvas-wrapper {
+    height: 330px;
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 400px) {
+  .memory-jar-3d-canvas-wrapper {
+    height: 290px;
+    max-width: 320px;
+  }
+}

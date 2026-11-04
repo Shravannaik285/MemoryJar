@@ -1,0 +1,386 @@
+/* ==========================================================================
+   BIRTHDAY REMINDER COMPONENT STYLES
+   "Your Special Day" Card, Date Picker, Reminder Toggle, and Countdown
+   ========================================================================== */
+
+.birthday-card-container {
+  width: 100%;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-warm);
+  padding: 1.35rem 1.5rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.birthday-card-container:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Header Row */
+.birthday-header-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.birthday-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #FFF1F2;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  color: #E11D48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(225, 29, 72, 0.08);
+}
+
+.bday-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.birthday-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.birthday-title {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.birthday-subtitle {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.bday-explanation-note {
+  font-family: var(--font-script);
+  font-size: 1.15rem;
+  color: #E11D48;
+  margin-top: 2px;
+}
+
+/* Controls Grid */
+.birthday-controls-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.birthday-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Date Picker Button */
+.date-picker-button {
+  position: relative;
+  flex: 1.2;
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  background: #FFFDF9;
+  border: 1.5px solid rgba(210, 180, 160, 0.4);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 6px rgba(100, 70, 50, 0.05);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-spring);
+}
+
+.date-picker-button:hover {
+  border-color: #E88B6E;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(232, 139, 110, 0.15);
+}
+
+.date-icon {
+  font-size: 1rem;
+  margin-right: 0.4rem;
+}
+
+.date-display-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dropdown-arrow {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-left: 0.5rem;
+}
+
+.hidden-date-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* Notification Time Selector */
+.time-picker-button {
+  position: relative;
+  flex: 0.9;
+  min-width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0.9rem;
+  background: #FFFDF9;
+  border: 1.5px solid rgba(210, 180, 160, 0.4);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 6px rgba(100, 70, 50, 0.05);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-spring);
+}
+
+.time-picker-button:hover {
+  border-color: #D0BCFE;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(208, 188, 254, 0.2);
+}
+
+.time-display-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Reminder Toggle Button */
+.reminder-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.25s var(--ease-spring);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+}
+
+.reminder-toggle-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reminder-toggle-button.active {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border-color: rgba(76, 175, 80, 0.3);
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.12);
+}
+
+.reminder-toggle-button.active:hover {
+  background: #DCEDC8;
+  transform: translateY(-1px);
+}
+
+.reminder-toggle-button.inactive {
+  background: #FFF0F3;
+  color: #BE123C;
+  border-color: #FECDD3;
+}
+
+.reminder-toggle-button.inactive:hover {
+  background: #FFE4E8;
+  transform: translateY(-1px);
+}
+
+.bell-icon {
+  font-size: 0.95rem;
+}
+
+.check-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #2E7D32;
+  color: #FFFFFF;
+  font-size: 11px;
+  border-radius: 50%;
+  margin-left: 2px;
+}
+
+/* Secondary Meta Row: Timezone & Test Notification */
+.birthday-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #8C7A6B;
+}
+
+.timezone-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(240, 230, 220, 0.45);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: #745A4C;
+}
+
+.test-notification-btn {
+  background: transparent;
+  border: 1px dashed #D0BCFE;
+  color: #6B46C1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.test-notification-btn:hover {
+  background: #F3E8FF;
+  border-color: #A855F7;
+  transform: translateY(-1px);
+}
+
+.test-notification-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Permission Denied Alert */
+.permission-denied-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: #92400E;
+  line-height: 1.4;
+}
+
+.permission-alert-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Countdown Banner */
+.countdown-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #FFF9F3 0%, #FFF3EC 100%);
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(230, 160, 140, 0.45);
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.countdown-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #FFFFFF;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(235, 175, 160, 0.35);
+  box-shadow: 0 2px 8px rgba(180, 120, 90, 0.08);
+}
+
+.calendar-mini-icon {
+  font-size: 0.85rem;
+}
+
+.days-number {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #D85A74;
+  letter-spacing: -0.2px;
+}
+
+.countdown-message {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Today's Special Celebration Banner */
+.today-celebration {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  animation: gentleFloat 2.5s infinite ease-in-out;
+}
+
+.countdown-banner.is-today {
+  background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E6 100%);
+  border: 1.5px solid #F43F5E;
+}
+
+.countdown-pill.pulse {
+  background: #F43F5E;
+  color: #FFFFFF;
+  font-weight: 700;
+  animation: softPulse 2s infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes softPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.92; transform: scale(1.02); }
+}
+
+@media (max-width: 580px) {
+  .birthday-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .reminder-toggle-button {
+    justify-content: center;
+  }
+  .birthday-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
