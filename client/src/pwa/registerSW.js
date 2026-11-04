@@ -7,8 +7,8 @@ export function registerServiceWorker({ onNeedRefresh, onOfflineReady } = {}) {
     return;
   }
 
-  // Register when the page loads
-  window.addEventListener('load', async () => {
+  // Function to register the service worker
+  const doRegister = async () => {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js', {
         scope: '/',
@@ -49,7 +49,14 @@ export function registerServiceWorker({ onNeedRefresh, onOfflineReady } = {}) {
     } catch (err) {
       console.warn('[PWA] Service worker registration failed:', err);
     }
-  });
+  };
+
+  // Register immediately if already loaded, otherwise listen for load event
+  if (document.readyState === 'complete') {
+    doRegister();
+  } else {
+    window.addEventListener('load', doRegister);
+  }
 
   // Listen for controlling worker change and reload page
   let refreshing = false;

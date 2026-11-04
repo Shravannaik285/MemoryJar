@@ -64,7 +64,12 @@ export async function getVapidPublicKey() {
     return ENV_VAPID_PUBLIC_KEY.trim();
   }
   try {
-    const res = await fetch(`${API_BASE_URL}/api/notifications/vapid-public-key`);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3500);
+    const res = await fetch(`${API_BASE_URL}/api/notifications/vapid-public-key`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
     if (res.ok) {
       const data = await res.json();
       if (data.publicKey) return data.publicKey;
@@ -82,8 +87,12 @@ export async function getVapidPublicKey() {
 export async function getCurrentSubscription() {
   if (!isPushSupported()) return null;
   try {
-    const registration = await navigator.serviceWorker.ready;
-    return await registration.pushManager.getSubscription();
+    const reg = await Promise.race([
+      navigator.serviceWorker.ready,
+      new Promise((resolve) => setTimeout(() => resolve(null), 2000)),
+    ]);
+    if (!reg) return null;
+    return await reg.pushManager.getSubscription();
   } catch (err) {
     console.warn('[NotificationService] Error getting current subscription:', err);
     return null;
@@ -113,42 +122,73 @@ export async function subscribeToBirthdayPush({ birthday, notificationTime, time
     );
   }
 
-  // 2. Obtain service worker registration
-  const registration = await navigator.serviceWorker.ready;
+  // 2. Ensure service worker is actively registered
+  let registration = null;
+  if ('serviceWorker' in navigator) {
+    registration = await navigator.serviceWorker.getRegistration();
+    if (!registration) {
+      registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    }
+  }
+
+  const readyTimeout = new Promise((resolve) => setTimeout(() => resolve(registration), 4000));
+  registration = (await Promise.race([navigator.serviceWorker.ready, readyTimeout])) || registration;
+
+  if (!registration || !registration.pushManager) {
+    // If pushManager is unavailable on the device, still persist locally so user reminders are active
+    saveLocalPreferences({
+      birthday,
+      notificationTime,
+      timezone,
+      enabled: true,
+    });
+    return { success: true, subscription: null };
+  }
 
   // 3. Fetch VAPID key and subscribe
   const vapidKey = await getVapidPublicKey();
   const convertedKey = urlBase64ToUint8Array(vapidKey);
 
-  let subscription = await registration.pushManager.getSubscription();
-  if (!subscription) {
-    subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: convertedKey,
-    });
+  let subscription = null;
+  try {
+    subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: convertedKey,
+      });
+    }
+  } catch (pushErr) {
+    console.warn('[NotificationService] PushManager subscription warning:', pushErr);
   }
 
-  // 4. Send subscription details to backend
-  const payload = {
-    subscription: subscription.toJSON(),
-    birthday,
-    notificationTime: notificationTime || '09:00',
-    timezone: timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
-    enabled: true,
-  };
+  // 4. Send subscription details to backend if subscription succeeded
+  if (subscription) {
+    const payload = {
+      subscription: subscription.toJSON(),
+      birthday,
+      notificationTime: notificationTime || '09:00',
+      timezone: timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+      enabled: true,
+    };
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/notifications/subscribe`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API_BASE_URL}/api/notifications/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
 
-    if (!res.ok) {
-      console.warn('[NotificationService] Server subscription returned status:', res.status);
+      if (!res.ok) {
+        console.warn('[NotificationService] Server subscription returned status:', res.status);
+      }
+    } catch (err) {
+      console.warn('[NotificationService] Failed to notify backend, offline or server unavailable:', err.message);
     }
-  } catch (err) {
-    console.warn('[NotificationService] Failed to notify backend, offline or server unavailable:', err.message);
   }
 
   // 5. Store preference locally
@@ -170,22 +210,30 @@ export async function unsubscribeFromBirthdayPush() {
   if (!isPushSupported()) return { success: true };
 
   try {
-    const registration = await navigator.serviceWorker.ready;
-    const subscription = await registration.pushManager.getSubscription();
+    const registration = await Promise.race([
+      navigator.serviceWorker.ready,
+      new Promise((resolve) => setTimeout(() => resolve(null), 2000)),
+    ]);
+    if (registration && registration.pushManager) {
+      const subscription = await registration.pushManager.getSubscription();
+      if (subscription) {
+        const endpoint = subscription.endpoint;
+        await subscription.unsubscribe();
 
-    if (subscription) {
-      const endpoint = subscription.endpoint;
-      await subscription.unsubscribe();
-
-      // Notify backend
-      try {
-        await fetch(`${API_BASE_URL}/api/notifications/unsubscribe`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ endpoint }),
-        });
-      } catch (e) {
-        console.warn('[NotificationService] Backend unsubscribe failed:', e.message);
+        // Notify backend
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 4000);
+          await fetch(`${API_BASE_URL}/api/notifications/unsubscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ endpoint }),
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+        } catch (e) {
+          console.warn('[NotificationService] Backend unsubscribe failed:', e.message);
+        }
       }
     }
   } catch (err) {
