@@ -127,6 +127,17 @@ export function normalizeMemory(record) {
  */
 export async function initDatabase(seedMemories = []) {
   try {
+    // Purge any legacy sample/demo memories (mem-1 through mem-24)
+    const existing = await db.memories.toArray();
+    const sampleIds = existing
+      .filter((m) => typeof m.id === 'string' && /^mem-\d+$/.test(m.id))
+      .map((m) => m.id);
+
+    if (sampleIds.length > 0) {
+      console.log(`[memoryService] Purging ${sampleIds.length} legacy sample memories...`);
+      await db.memories.bulkDelete(sampleIds);
+    }
+
     const count = await db.memories.count();
     if (count === 0 && seedMemories && seedMemories.length > 0) {
       console.log(`[memoryService] Seeding database with ${seedMemories.length} initial memories...`);
