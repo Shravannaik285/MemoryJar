@@ -9,10 +9,8 @@ export function useBirthdayReveal({
 }) {
   const [currentStage, setCurrentStage] = useState('welcome');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-
-  const progressIntervalRef = useRef(null);
 
   // Sort memories strictly chronologically (Oldest first, Newest last)
   const sortedMemories = useMemo(() => {
@@ -29,17 +27,17 @@ export function useBirthdayReveal({
     if (isOpen) {
       setCurrentStage('welcome');
       setCurrentIndex(0);
-      setIsPlaying(true);
+      setIsPlaying(false);
       setProgress(0);
     }
   }, [isOpen]);
 
   // Next Memory Navigation
   const nextMemory = useCallback(() => {
-    setProgress(0);
     setCurrentIndex((prev) => {
       if (prev >= sortedMemories.length - 1) {
         // Reached end of memories, transition to finale screen
+        setIsPlaying(false);
         setCurrentStage('finale');
         return prev;
       }
@@ -49,13 +47,11 @@ export function useBirthdayReveal({
 
   // Previous Memory Navigation
   const prevMemory = useCallback(() => {
-    setProgress(0);
     setCurrentIndex((prev) => (prev > 0 ? prev - 1 : 0));
   }, []);
 
   // Jump to specific index
   const goToIndex = useCallback((idx) => {
-    setProgress(0);
     setCurrentIndex(idx);
   }, []);
 
@@ -74,35 +70,30 @@ export function useBirthdayReveal({
   const replay = useCallback(() => {
     setCurrentIndex(0);
     setProgress(0);
-    setIsPlaying(true);
+    setIsPlaying(false);
     setCurrentStage('opening');
   }, []);
 
-  // Autoplay progression timer
+  // Timer only active when user explicitly clicks the Play button
   useEffect(() => {
     if (currentStage !== 'slideshow' || !isPlaying || sortedMemories.length === 0) {
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
       return;
     }
 
-    const intervalStep = 100; // Update progress every 100ms
-    const totalSteps = AUTOPLAY_STEP_MS / intervalStep;
-
-    progressIntervalRef.current = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + 1 / totalSteps;
-        if (next >= 1) {
-          nextMemory();
-          return 0;
+    const timer = setTimeout(() => {
+      setCurrentIndex((prev) => {
+        if (prev < sortedMemories.length - 1) {
+          return prev + 1;
+        } else {
+          setIsPlaying(false);
+          setCurrentStage('finale');
+          return prev;
         }
-        return next;
       });
-    }, intervalStep);
+    }, AUTOPLAY_STEP_MS);
 
-    return () => {
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
-    };
-  }, [currentStage, isPlaying, nextMemory, sortedMemories.length]);
+    return () => clearTimeout(timer);
+  }, [currentStage, isPlaying, currentIndex, sortedMemories.length]);
 
   return {
     currentStage,
@@ -120,7 +111,7 @@ export function useBirthdayReveal({
     skipToFinale,
     replay,
     closeReveal: () => {
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+      setIsPlaying(false);
       if (onClose) onClose();
     },
   };

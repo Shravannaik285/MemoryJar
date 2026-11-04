@@ -272,23 +272,6 @@
   border: 1px solid #FFA3B8;
 }
 
-.slideshow-progress-bar-container {
-  flex: 1;
-  max-width: 220px;
-  height: 6px;
-  background: #F3E8E2;
-  border-radius: 999px;
-  overflow: hidden;
-  margin: 0 1rem;
-}
-
-.slideshow-progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #FFB3C6, #D0BCFE);
-  border-radius: 999px;
-  transition: width 0.1s linear;
-}
-
 .slideshow-close-btn {
   background: transparent;
   border: none;
@@ -573,11 +556,6 @@
 
   .memory-text-content {
     font-size: 1.3rem;
-  }
-
-  .slideshow-progress-bar-container {
-    max-width: 120px;
-    margin: 0 0.5rem;
   }
 }
 

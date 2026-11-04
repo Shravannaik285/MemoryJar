@@ -74,18 +74,11 @@ export default function MemorySlideshow({
         '--paper-text': paperText,
       }}
     >
-      {/* Top Header: Step Badge & Auto-play Progress */}
+      {/* Top Header: Step Badge & Close */}
       <div className="slideshow-header-row">
         <span className="slideshow-step-badge">
           Moment {currentIndex + 1} of {totalMemories}
         </span>
-
-        <div className="slideshow-progress-bar-container" title="Auto-advance progress">
-          <div
-            className="slideshow-progress-bar-fill"
-            style={{ width: `${Math.min(100, Math.max(0, progress * 100))}%` }}
-          />
-        </div>
 
         <button
           type="button"
