@@ -28,7 +28,7 @@ services:
       - key: VAPID_PRIVATE_KEY
         sync: false # Paste your private VAPID key securely
       - key: VAPID_SUBJECT
-        value: mailto:hello@memoryjar.app
+        value: mailto:sn9188873@gmail.com
     healthCheckPath: /api/health
     autoDeploy: true
 

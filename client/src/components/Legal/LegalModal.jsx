@@ -200,8 +200,8 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'privacy' }) 
                 <div className="contact-details">
                   <h4>Send Us a Note</h4>
                   <p>Have an idea, found a bug, or just want to share a heartwarming story?</p>
-                  <a href="mailto:hello@memoryjar.app?subject=Memory%20Jar%20Feedback" className="contact-email-link">
-                    ✉️ hello@memoryjar.app
+                  <a href="mailto:sn9188873@gmail.com?subject=Memory%20Jar%20Feedback" className="contact-email-link">
+                    ✉️ sn9188873@gmail.com
                   </a>
                 </div>
               </div>

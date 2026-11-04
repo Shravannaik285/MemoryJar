@@ -196,6 +196,6 @@ npm test
    * `FRONTEND_URL`: `https://your-frontend.vercel.app`
    * `VAPID_PUBLIC_KEY`: `BIKZISjQ8G8ovWn0tdrMYkAXlWWs-C4wDGFd8GZNknepGflYRDTw7LP0QblSQB_1gSJd8ceydDWBhH-RYIZ114k`
    * `VAPID_PRIVATE_KEY`: `[YOUR_SECRET_PRIVATE_KEY]`
-   * `VAPID_SUBJECT`: `mailto:hello@memoryjar.app`
+   * `VAPID_SUBJECT`: `mailto:sn9188873@gmail.com`
 6. Deploy. The backend will run 24/7, persisting subscriptions and evaluating birthday notifications every 5 minutes.
 
