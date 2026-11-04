@@ -4,6 +4,7 @@ import {
   registerOrUpdateSubscription,
   unregisterSubscription,
   setReminderEnabled,
+  processBirthdayReminders,
 } from '../services/birthdayService.js';
 import { sendPushNotification } from '../services/pushService.js';
 import { findSubscription } from '../utils/storage.js';
@@ -171,6 +172,24 @@ router.get('/status', (req, res) => {
     timezone: sub.timezone,
     lastNotifiedYear: sub.lastNotifiedYear,
   });
+});
+
+/**
+ * GET or POST /api/notifications/check-cron
+ * Endpoint for Vercel Cron or external schedulers to trigger birthday checks.
+ */
+router.all('/check-cron', async (req, res) => {
+  try {
+    const stats = await processBirthdayReminders();
+    return res.status(200).json({
+      success: true,
+      timestamp: new Date().toISOString(),
+      stats,
+    });
+  } catch (err) {
+    console.error('[API /check-cron] Error:', err);
+    return res.status(500).json({ error: 'Failed to process reminders: ' + err.message });
+  }
 });
 
 export default router;

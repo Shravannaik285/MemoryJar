@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_DIR = process.env.DATA_DIR || path.resolve(__dirname, '../../data');
+const DATA_DIR = process.env.DATA_DIR || (process.env.VERCEL ? '/tmp/memoryjar-data' : path.resolve(__dirname, '../../data'));
 const DATA_FILE = path.join(DATA_DIR, 'subscriptions.json');
 const BACKUP_FILE = path.join(DATA_DIR, 'subscriptions.backup.json');
 

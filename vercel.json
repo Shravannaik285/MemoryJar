@@ -8,6 +8,7 @@
     "server": {
       "root": "server",
       "framework": "express",
+      "entrypoint": "server.js",
       "bindings": [
         {
           "type": "service",
@@ -18,6 +19,12 @@
       ]
     }
   },
+  "crons": [
+    {
+      "path": "/api/notifications/check-cron",
+      "schedule": "0 * * * *"
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
