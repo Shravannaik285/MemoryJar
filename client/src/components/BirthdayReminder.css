@@ -94,8 +94,8 @@
 /* Date Picker Button */
 .date-picker-button {
   position: relative;
-  flex: 1.2;
-  min-width: 170px;
+  flex: 1;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
