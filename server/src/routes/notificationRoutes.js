@@ -7,7 +7,7 @@ import {
   processBirthdayReminders,
 } from '../services/birthdayService.js';
 import { sendPushNotification } from '../services/pushService.js';
-import { findSubscription } from '../utils/storage.js';
+import { findSubscription, upsertSubscription } from '../utils/storage.js';
 
 const router = express.Router();
 
@@ -113,15 +113,28 @@ router.post('/toggle', (req, res) => {
  * Sends an immediate test notification to verify Web Push delivery.
  */
 router.post('/test-notification', async (req, res) => {
-  const { endpoint, customPayload } = req.body;
+  const { endpoint, subscription, customPayload } = req.body;
 
-  if (!endpoint) {
-    return res.status(400).json({ error: 'Subscription endpoint is required.' });
+  // Accept direct subscription object (serverless/stateless safe) or lookup by endpoint
+  let targetSub = subscription || (endpoint ? findSubscription(endpoint) : null);
+
+  if (!targetSub && endpoint) {
+    targetSub = findSubscription(endpoint);
   }
 
-  const sub = findSubscription(endpoint);
-  if (!sub) {
+  if (!targetSub || !targetSub.endpoint) {
     return res.status(404).json({ error: 'Subscription not found on server.' });
+  }
+
+  // Persist / update record in storage
+  try {
+    upsertSubscription({
+      endpoint: targetSub.endpoint,
+      keys: targetSub.keys || {},
+      enabled: true,
+    });
+  } catch (storageErr) {
+    console.warn('[API /test-notification] Storage note:', storageErr.message);
   }
 
   try {
@@ -131,7 +144,7 @@ router.post('/test-notification', async (req, res) => {
       url: '/?reveal=true',
     };
 
-    const result = await sendPushNotification(sub, payload);
+    const result = await sendPushNotification(targetSub, payload);
 
     if (result.success) {
       return res.status(200).json({ success: true, message: 'Test notification sent!' });

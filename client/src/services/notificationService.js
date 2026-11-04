@@ -257,18 +257,33 @@ export async function sendTestBirthdayNotification() {
     throw new Error('No active push subscription found. Please enable birthday reminders first.');
   }
 
-  const res = await fetch(`${API_BASE_URL}/api/notifications/test-notification`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ endpoint: subscription.endpoint }),
-  });
+  const subJson = subscription.toJSON ? subscription.toJSON() : subscription;
 
-  if (!res.ok) {
-    const data = await res.json().catch(() => ({}));
-    throw new Error(data.error || 'Failed to send test notification.');
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/notifications/test-notification`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        endpoint: subscription.endpoint,
+        subscription: subJson,
+      }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || 'Failed to send test notification.');
+    }
+
+    return await res.json();
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
   }
-
-  return await res.json();
 }
 
 /**
