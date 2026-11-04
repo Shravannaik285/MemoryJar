@@ -19,12 +19,6 @@
       ]
     }
   },
-  "crons": [
-    {
-      "path": "/api/notifications/check-cron",
-      "schedule": "0 * * * *"
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
