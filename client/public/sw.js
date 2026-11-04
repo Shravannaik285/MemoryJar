@@ -3,7 +3,7 @@
  * Tagline: Little moments. A lifetime of memories.
  */
 
-const CACHE_VERSION = 'v1.0.0';
+const CACHE_VERSION = 'v1.0.1';
 const CACHE_NAME = `memory-jar-${CACHE_VERSION}`;
 
 // Pre-cached core application shell resources
@@ -26,17 +26,14 @@ const FONT_ORIGINS = [
   'https://fonts.gstatic.com',
 ];
 
-// 1. Install Event: Cache essential app shell assets
+// 1. Install Event: Cache essential app shell assets and activate immediately
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches
       .open(CACHE_NAME)
       .then((cache) => {
         return cache.addAll(PRECACHE_RESOURCES);
-      })
-      .then(() => {
-        // Do not force skipWaiting immediately during install
-        // to avoid breaking active memory-writing sessions
       })
       .catch((err) => {
         console.warn('[SW] Pre-cache failed during installation:', err);
