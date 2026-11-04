@@ -74,3 +74,5 @@ app.listen(PORT, () => {
   console.log(`   VAPID Key configured: ${process.env.VAPID_PUBLIC_KEY ? 'Yes' : 'No'}`);
 });
 
+export default app;
+

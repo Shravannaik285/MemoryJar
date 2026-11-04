@@ -198,3 +198,4 @@ npm test
    * `VAPID_PRIVATE_KEY`: `[YOUR_SECRET_PRIVATE_KEY]`
    * `VAPID_SUBJECT`: `mailto:hello@memoryjar.app`
 6. Deploy. The backend will run 24/7, persisting subscriptions and evaluating birthday notifications every 5 minutes.
+
