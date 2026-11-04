@@ -46,7 +46,7 @@ export async function sendPushNotification(subscription, customPayload = {}) {
     return {
       success: false,
       statusCode: err.statusCode,
-      error: err.message,
+      error: err.body || err.message,
     };
   }
 }

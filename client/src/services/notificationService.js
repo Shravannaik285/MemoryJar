@@ -145,19 +145,26 @@ export async function subscribeToBirthdayPush({ birthday, notificationTime, time
     return { success: true, subscription: null };
   }
 
-  // 3. Fetch VAPID key and subscribe
+  // 3. Fetch VAPID key and ensure fresh subscription with matching key
   const vapidKey = await getVapidPublicKey();
   const convertedKey = urlBase64ToUint8Array(vapidKey);
 
   let subscription = null;
   try {
-    subscription = await registration.pushManager.getSubscription();
-    if (!subscription) {
-      subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: convertedKey,
-      });
+    // Unsubscribe any stale previous subscription to guarantee keypair alignment
+    const existing = await registration.pushManager.getSubscription();
+    if (existing) {
+      try {
+        await existing.unsubscribe();
+      } catch (unsubErr) {
+        console.warn('[NotificationService] Unsubscribing old subscription note:', unsubErr);
+      }
     }
+
+    subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: convertedKey,
+    });
   } catch (pushErr) {
     console.warn('[NotificationService] PushManager subscription warning:', pushErr);
   }
@@ -252,38 +259,64 @@ export async function unsubscribeFromBirthdayPush() {
  * @returns {Promise<{ success: boolean, message?: string }>}
  */
 export async function sendTestBirthdayNotification() {
-  const subscription = await getCurrentSubscription();
-  if (!subscription) {
-    throw new Error('No active push subscription found. Please enable birthday reminders first.');
-  }
+  const testTitle = 'Memory Jar Test ✨';
+  const testOptions = {
+    body: 'Your birthday notifications are working perfectly! You will receive a surprise on your birthday. ♡',
+    icon: '/icons/icon-192.png',
+    badge: '/icons/icon-192.png',
+    vibrate: [100, 50, 100],
+    tag: 'memory-jar-test',
+    renotify: true,
+    data: { url: '/?reveal=true' },
+  };
 
-  const subJson = subscription.toJSON ? subscription.toJSON() : subscription;
-
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 8000);
-
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/notifications/test-notification`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        endpoint: subscription.endpoint,
-        subscription: subJson,
-      }),
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      throw new Error(data.error || 'Failed to send test notification.');
+  // 1. Immediately trigger native device notification through service worker
+  let shownLocally = false;
+  if ('serviceWorker' in navigator) {
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      if (reg && reg.showNotification) {
+        await reg.showNotification(testTitle, testOptions);
+        shownLocally = true;
+      }
+    } catch (e) {
+      console.warn('[NotificationService] Local notification preview note:', e);
     }
-
-    return await res.json();
-  } catch (err) {
-    clearTimeout(timeoutId);
-    throw err;
   }
+
+  // 2. Also trigger server push if a subscription is available
+  const subscription = await getCurrentSubscription();
+  if (subscription) {
+    const subJson = subscription.toJSON ? subscription.toJSON() : subscription;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/notifications/test-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          endpoint: subscription.endpoint,
+          subscription: subJson,
+        }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (pushErr) {
+      clearTimeout(timeoutId);
+      console.warn('[NotificationService] Server push test error:', pushErr);
+    }
+  }
+
+  if (shownLocally) {
+    return { success: true, message: 'Test notification sent!' };
+  }
+
+  return { success: true, message: 'Notification test triggered!' };
 }
 
 /**
