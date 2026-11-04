@@ -31,3 +31,4 @@ services:
         value: mailto:hello@memoryjar.app
     healthCheckPath: /api/health
     autoDeploy: true
+

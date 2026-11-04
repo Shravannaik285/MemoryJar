@@ -232,3 +232,4 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'privacy' }) 
     </div>
   );
 }
+

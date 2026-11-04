@@ -31,3 +31,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
 
 # Start the Node.js server with persistent node-cron scheduler
 CMD ["node", "server.js"]
+
