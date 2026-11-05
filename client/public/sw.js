@@ -3,7 +3,7 @@
  * Tagline: Little moments. A lifetime of memories.
  */
 
-const CACHE_VERSION = 'v1.0.1';
+const CACHE_VERSION = 'v1.0.2';
 const CACHE_NAME = `memory-jar-${CACHE_VERSION}`;
 
 // Pre-cached core application shell resources

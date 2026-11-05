@@ -1,9 +1,4 @@
 import webpush from 'web-push';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-import webpush from 'web-push';
 import crypto from 'node:crypto';
 import dotenv from 'dotenv';
 
@@ -45,6 +40,3 @@ webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 console.log('[VAPID Config] WebPush VAPID details configured successfully.');
 
 export default webpush;
-
-export default webpush;
-
